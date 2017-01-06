@@ -5,16 +5,9 @@ sta_if.connect('ssid', 'pass')
 
 import machine
 import ure
+import uio as IO
 pins = [machine.Pin(i, machine.Pin.IN) for i in (0, 2, 4, 5, 12, 13, 14, 15)]
 
-html = """<!DOCTYPE html>
-<html>
-    <head> <title>ESP8266 Pins</title> </head>
-    <body> <h1>ESP8266 Pins</h1>
-        <table border="1"> <tr><th>Pin</th><th>Value</th></tr> %s </table>
-    </body>
-</html>
-"""
 
 import socket
 addr = socket.getaddrinfo('0.0.0.0', 80)[0][-1]
@@ -29,7 +22,11 @@ while True:
     cl, addr = s.accept()
     print('client connected from', addr)
     cl_file = cl.makefile('rwb', 0)
-    rows = ['<tr><td>%s</td><td>he he %d</td></tr>' % (str(p), p.value()) for p in pins]
-    response = html % '\n'.join(rows)
+    my_file = IO.open('index.html', 'r')
+    html = ""
+    for line in my_file:
+        html += str(line)
+    print(html)
+    response = html
     cl.send(response)
     cl.close()
