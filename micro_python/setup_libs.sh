@@ -1,4 +1,4 @@
-ampy --port /dev/cu.SLAB_USBtoUART mkdir lib/logging#!/bin/bash
+
 ampy --port /dev/cu.SLAB_USBtoUART mkdir lib
 echo "lib created"
 ampy --port /dev/cu.SLAB_USBtoUART mkdir lib/picoweb
