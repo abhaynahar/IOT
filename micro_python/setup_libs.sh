@@ -15,7 +15,17 @@ echo "lib/uasync init copied"
 ampy --port /dev/cu.SLAB_USBtoUART put lib/uasyncio/core.py lib/uasyncio/core.py
 echo "lib/uasync core copied"
 
-
 ampy --port /dev/cu.SLAB_USBtoUART put lib/logging.py lib/logging.py
-echo "lib/logging logging copied"
+echo "lib/ logging copied"
+
+
+ampy --port /dev/cu.SLAB_USBtoUART mkdir lib/wlan
+echo "lib/wlan created"
+
+ampy --port /dev/cu.SLAB_USBtoUART put lib/wlan/__init__.py lib/wlan/__init__.py
+echo "lib/wlan init copied"
+
+ampy --port /dev/cu.SLAB_USBtoUART put lib/boot.py
+echo "lib/boot.py boot copied"
+
 ampy --port /dev/cu.SLAB_USBtoUART reset

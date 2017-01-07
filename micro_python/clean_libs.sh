@@ -12,3 +12,11 @@ echo "lib/uasync core deleted"
 
 ampy --port /dev/cu.SLAB_USBtoUART rm lib/logging.py
 echo "lib/logging logging deleted"
+
+
+
+ampy --port /dev/cu.SLAB_USBtoUART rm lib/wlan/__init__.py
+echo "lib/logging logging deleted"
+
+
+ampy --port /dev/cu.SLAB_USBtoUART rm boot.py
