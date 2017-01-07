@@ -22,7 +22,7 @@ while True:
     cl, addr = s.accept()
     print('client connected from', addr)
     cl_file = cl.makefile('rwb', 0)
-    my_file = IO.open('index.html', 'r')
+    my_file = IO.open('templates/index.html', 'r')
     html = ""
     for line in my_file:
         html += str(line)
