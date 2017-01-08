@@ -25,14 +25,25 @@ def index(req, resp):
       yield from resp.awrite("connected")
 
 
-@app.route("/squares")
-def index(req, resp):
+@app.route("/network")
+def network(req, resp):
     req.parse_qs()
-    print("******** - squares",req.form)
+    print("******** ",req.form)
     yield from resp.awrite("HTTP/1.0 200 OK\r\n")
     yield from resp.awrite("Content-Type: text/html\r\n")
     yield from resp.awrite("\r\n")
-    yield from resp.awrite("OK")
+    yield from resp.awrite("""<!DOCTYPE html><html><head><title>ESP8266 Pins</title></head><body><h1>Connect</h1><br><form class="" action="/connect" ><label>%s</label><input type="hidden" name="ssid" value="%s"/><input type="password" name="password" value=""/><input type="submit" value="Connect"/></form></body></html>""" % (req.form["name"][0], req.form["name"][0]) )
+
+@app.route("/connect")
+def connect(req, resp):
+    req.parse_qs()
+    print("******** ",req.form)
+    yield from resp.awrite("HTTP/1.0 200 OK\r\n")
+    yield from resp.awrite("Content-Type: text/html\r\n")
+    yield from resp.awrite("\r\n")
+    import wlan
+    yield from resp.awrite("""<!DOCTYPE html><html><head><title>ESP8266 Pins</title></head><body><h1>Connected</h1><br>Connecting</body></html>""" % (config) )
+    config = wlan.connect(req.form['ssid'][0], req.form['password'][0])
 
 
 import wlan
