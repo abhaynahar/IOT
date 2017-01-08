@@ -10,12 +10,11 @@ app = picoweb.WebApp(__name__)
 @app.route("/")
 def index(req, resp):
     import wlan
-    scans = wlan.scan()
     if not wlan.is_connected():
       yield from resp.awrite("HTTP/1.0 200 OK\r\n")
       yield from resp.awrite("Content-Type: text/html\r\n")
       yield from resp.awrite("\r\n")
-      rows = ['<tr><td>%s</td></tr>' % ( bssid[0].decode("utf-8")) for bssid in wlan.scan()]
+      rows = wlan.get_available_networks_html();
       print(rows)
       yield from resp.awrite(str(rows))
     else:

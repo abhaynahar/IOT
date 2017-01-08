@@ -16,7 +16,7 @@ echo "lib/logging logging deleted"
 
 
 ampy --port /dev/cu.SLAB_USBtoUART rm lib/wlan/__init__.py
-echo "lib/logging logging deleted"
+echo "lib/wlan __init__ deleted"
 
 
 ampy --port /dev/cu.SLAB_USBtoUART rm boot.py
