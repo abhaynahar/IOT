@@ -42,8 +42,8 @@ def connect(req, resp):
     yield from resp.awrite("Content-Type: text/html\r\n")
     yield from resp.awrite("\r\n")
     import wlan
-    yield from resp.awrite("""<!DOCTYPE html><html><head><title>ESP8266 Pins</title></head><body><h1>Connected</h1><br>Connecting</body></html>""" % (config) )
     config = wlan.connect(req.form['ssid'][0], req.form['password'][0])
+    yield from resp.awrite("""<!DOCTYPE html><html><head><title>ESP8266 Pins</title></head><body><h1>Connected</h1><br>%s</body></html>""" % (config) )
 
 
 import wlan
