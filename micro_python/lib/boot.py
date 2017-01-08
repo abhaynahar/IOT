@@ -1,15 +1,11 @@
 import ure
 import picoweb
-import logging
+import wlan
 
-
-
-logging.basicConfig(level=logging.DEBUG)
 app = picoweb.WebApp(__name__)
 
 @app.route("/")
 def index(req, resp):
-    import wlan
     if not wlan.is_connected():
       yield from resp.awrite("HTTP/1.0 200 OK\r\n")
       yield from resp.awrite("Content-Type: text/html\r\n")
@@ -19,10 +15,11 @@ def index(req, resp):
       yield from resp.awrite(str(rows))
     else:
       print("********",req)
+      wlan.close_hot()
       yield from resp.awrite("HTTP/1.0 200 OK\r\n")
       yield from resp.awrite("Content-Type: text/html\r\n")
       yield from resp.awrite("\r\n")
-      yield from resp.awrite("connected")
+      yield from resp.awrite("connected %s" % (str(wlan.if_config())) )
 
 
 @app.route("/network")
@@ -41,12 +38,9 @@ def connect(req, resp):
     yield from resp.awrite("HTTP/1.0 200 OK\r\n")
     yield from resp.awrite("Content-Type: text/html\r\n")
     yield from resp.awrite("\r\n")
-    import wlan
     config = wlan.connect(req.form['ssid'][0], req.form['password'][0])
-    yield from resp.awrite("""<!DOCTYPE html><html><head><title>ESP8266 Pins</title></head><body><h1>Connected</h1><br>%s</body></html>""" % (config) )
+    yield from resp.awrite("""<!DOCTYPE html><html><head><title>ESP8266 Pins</title></head><body><h1>Change your network and click</h1><a href="http://%s">Go</a></body></html>""" % (str(config[0])) )
 
-
-import wlan
 wlan.scan()
 print(wlan.is_connected())
 if not wlan.is_connected():

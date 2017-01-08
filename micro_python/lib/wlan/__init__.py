@@ -9,19 +9,22 @@ def scan():
 def is_connected():
     return wlan.isconnected()
 
+def if_config():
+    return wlan.ifconfig()
 def connect(ssid,password):
     if not wlan.isconnected():
         print('connecting to network...')
         wlan.connect(ssid, password)
         while not is_connected():
             pass
-    ap.active(False)
     return wlan.ifconfig()
 
 def create_hot():
-    ap = network.WLAN(network.AP_IF)
     ap.active(True)
     ap.config(essid='SUNGU_DA')
+
+def close_hot():
+    ap.active(False)
 
 def get_available_networks_html():
     html = """<!DOCTYPE html><html><head> <title>ESP8266 Pins</title> </head><body> <h1>Available Networks</h1><table style="text-align:center;" border="1"> <tr><th>Netowrk</th><th>Connect</th></tr> %s </table></body></html>"""
